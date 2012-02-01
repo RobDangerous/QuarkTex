@@ -203,8 +203,8 @@ Storm Shell Project (Dependencies)
 ""
 1 1
 File
-1 "QuarkTex:gl/gl.c"
-"QuarkTex:gl/gl.c"
+1 "QuarkTex:0.6/gl/gl.c"
+"/gl/gl.c"
 "/gl/gl.h"
 "/gl/gldefines.h"
 "/gl/gldeclarations.auto.h"
@@ -215,6 +215,28 @@ Storm Shell Project (Dependencies)
 "objects/gl.o" "objects/gl.debug"
 ""
 1 1
+Section
+21 1 87
+0 1 1 0
+2
+File
+21 "QuarkTex:0.6/gl/glstatichandles.auto.c"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+21 "QuarkTex:0.6/gl/glDLLfunc.auto.c"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+21 "QuarkTex:0.6/gl/gldefinitions.auto.c"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
 Section
 16 1 75
 0 1 1 0
@@ -290,6 +312,27 @@ Storm Shell Project (Dependencies)
 File
 2 "QuarkTex:gl/gldeclarations.auto.h"
 "QuarkTex:gl/gldeclarations.auto.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "QuarkTex:0.6/gl/gl.h"
+"QuarkTex:0.6/gl/gl.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "QuarkTex:0.6/gl/gldefines.h"
+"QuarkTex:0.6/gl/gldefines.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "QuarkTex:0.6/gl/gldeclarations.auto.h"
+"QuarkTex:0.6/gl/gldeclarations.auto.h"
 Storm Shell Project (Dependencies)
 "" ""
 ""

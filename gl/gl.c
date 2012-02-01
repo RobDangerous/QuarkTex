@@ -60,7 +60,6 @@ void glInit(void) {
 	free = DLLfunc(w3d, "freeContext");
 	swap = DLLfunc(w3d, "swapBuffers");
 	log = DLLfunc(w3d, "logString");
-
 	gl = DLLopen("opengl32.dll");
 
 	#include "glDLLfunc.auto.c"

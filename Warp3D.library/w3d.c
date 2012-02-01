@@ -53,7 +53,7 @@ void bindTexture(W3D_Texture* tex) {
 	//if (tex == lasttex || !tex) return;
 	if (!tex) return;
 	_glBindTexture(GL_TEXTURE_2D, ((Texture*) tex->driver)->glID);
-	if (((Texture*) tex->driver)->envparam) _glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, envs[tex->bytesperpix]);
+	if (((Texture*) tex->driver)->envparam) _glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, envs[((Texture*) tex->driver)->envparam]);
 	if (((Texture*) tex->driver)->envparam == W3D_BLEND) {
 		color[0] = ((Texture*) tex->driver)->envcolor.r; color[1] = ((Texture*) tex->driver)->envcolor.b;
 		color[2] = ((Texture*) tex->driver)->envcolor.g; color[3] = ((Texture*) tex->driver)->envcolor.a;

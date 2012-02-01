@@ -1,6 +1,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <GL/gl.h>
+#include <GL/glu.h>
 //#include <fstream>
 //#include <strstream>
 
@@ -50,8 +51,8 @@ namespace {
 //std::ofstream out("QuarkTexLog.txt");
 
 DLL void logString(char* c) {
-//	out << c;
-//	out.flush();
+	//out << c;
+	//out.flush();
 }
 
 int cleft, ctop, cwidth, cheight;
@@ -145,4 +146,11 @@ DLL void swapBuffers(int, int, int, int, int, int, int, int, int, int, int, int,
 	if (screenlost(a6, oldnum)) logString("Warning: Screen Lost");
 	SwapBuffers(deviceContext);
 	//glClear(GL_COLOR_BUFFER_BIT);
+	/*GLenum code = glGetError();
+	if (code!=GL_NO_ERROR) logString("GL Error!\n");
+	while (code!=GL_NO_ERROR)
+	{
+		logString((char *) gluErrorString(code));
+		code = glGetError();
+	}*/
 }
