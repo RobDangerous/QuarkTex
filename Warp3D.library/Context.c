@@ -39,13 +39,15 @@ W3D_Context *W3D_CreateContext(__REGA0(ULONG *error),__REGA1(struct TagItem *CCT
 	struct BitMap* bitmap;
 	unsigned int bla;
 	void *fake;
+	int modeid;
+	struct DimensionInfo dinfo;
 	W3D_Context *context;
 	LOG;
 	firstWindow = NULL;
 	bitmap = NULL;
 	bla = 4 * 800 * 600;
 	fake = malloc(bla);
-	
+
 	context = (W3D_Context*) malloc(sizeof(W3D_Context));
 	context->driver = NULL; context->gfxdriver = NULL; context->drivertype = 0;
 	context->regbase = NULL; context->vmembase = NULL;
@@ -74,7 +76,7 @@ W3D_Context *W3D_CreateContext(__REGA0(ULONG *error),__REGA1(struct TagItem *CCT
 	context->ColorPointer = NULL; context->CPStride = 0; context->CPMode = 0; context->CPFlags = 0;
 	context->FrontFaceOrder = 0; context->specialbuffer = 0;
 
-	for (; CCTags->ti_Tag != TAG_DONE; ++CCTags) { if (CCTags->ti_Tag == W3D_CC_MODEID) fullscreen = 1; }
+	for (; CCTags->ti_Tag != TAG_DONE; ++CCTags) { if (CCTags->ti_Tag == W3D_CC_MODEID) { fullscreen = 1; modeid = CCTags->ti_Data; } }
 
 	if (fullscreen) {
 		oldscrollvport = SetFunction((struct Library *)GfxBase, -588, blub);
@@ -99,10 +101,23 @@ W3D_Context *W3D_CreateContext(__REGA0(ULONG *error),__REGA1(struct TagItem *CCT
 		width = window->Width - (window->BorderLeft + window->BorderRight);
 		height = window->Height - (window->BorderTop + window->BorderBottom);
 	}
-	else createContext(0, 0, 0, 0);
+	else {
+		createContext(0, 0, 0, 0);
+		GetDisplayInfoData(NULL, (UBYTE*)&dinfo, sizeof(dinfo), DTAG_DIMS, modeid);
+		left = 0;
+		top = 0;
+		width = dinfo.Nominal.MaxX-dinfo.Nominal.MinX+1;
+		height = dinfo.Nominal.MaxY-dinfo.Nominal.MinY+1;
+	}
 
 	//task = FindTask(NULL);
 
+	//default states
+	context->state |= W3D_AUTOTEXMANAGEMENT;
+	context->state |= W3D_TEXMAPPING; _glEnable(GL_TEXTURE_2D);
+	context->state |= W3D_GOURAUD; _glShadeModel(GL_SMOOTH);
+	context->state |= W3D_ZBUFFERUPDATE; //qlDepthMask(GL_FALSE);
+	
 	if (error) *error = W3D_SUCCESS;
 	return context;
 }
@@ -150,12 +165,12 @@ ULONG W3D_SetState(W3D_Context *context __asm("a0"), ULONG state __asm("d0"), UL
 		case W3D_ANTI_FULLSCREEN:	break;
 		case W3D_DITHERING:			break;
 		case W3D_LOGICOP:			_glEnable(GL_COLOR_LOGIC_OP); break;
-		case W3D_STENCILBUFFER:		break;
+		case W3D_STENCILBUFFER:		return W3D_UNSUPPORTEDSTATE;
 		case W3D_ALPHATEST:			_glEnable(GL_ALPHA_TEST); break;
 		case W3D_SPECULAR:			break;
 		case W3D_TEXMAPPING3D:		break;
 		case W3D_SCISSOR:			_glEnable(GL_SCISSOR_TEST); break;
-		case W3D_CHROMATEST:		break;
+		case W3D_CHROMATEST:		return W3D_UNSUPPORTEDSTATE;
 		case W3D_CULLFACE:			break;
 		}
 	}
@@ -181,12 +196,12 @@ ULONG W3D_SetState(W3D_Context *context __asm("a0"), ULONG state __asm("d0"), UL
 		case W3D_ANTI_FULLSCREEN:	break;
 		case W3D_DITHERING:			break;
 		case W3D_LOGICOP:			_glDisable(GL_COLOR_LOGIC_OP); break;
-		case W3D_STENCILBUFFER:		break;
+		case W3D_STENCILBUFFER:		return W3D_UNSUPPORTEDSTATE;
 		case W3D_ALPHATEST:			_glDisable(GL_ALPHA_TEST); break;
 		case W3D_SPECULAR:			break;
 		case W3D_TEXMAPPING3D:		break;
 		case W3D_SCISSOR:			_glDisable(GL_SCISSOR_TEST); break;
-		case W3D_CHROMATEST:		break;
+		case W3D_CHROMATEST:		return W3D_UNSUPPORTEDSTATE;
 		case W3D_CULLFACE:			break;
 		}
 	}

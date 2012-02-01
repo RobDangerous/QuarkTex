@@ -30,7 +30,7 @@ void INIT_0_Warp3D(void) {
 	driver.formats = W3D_FMT_CLUT | W3D_FMT_R5G5B5 | W3D_FMT_B5G5R5 | W3D_FMT_R5G5B5PC | W3D_FMT_B5G5R5PC |
 		W3D_FMT_R5G6B5 | W3D_FMT_B5G6R5 | W3D_FMT_R5G6B5PC | W3D_FMT_B5G6R5PC | W3D_FMT_R8G8B8 |
 		W3D_FMT_B8G8R8 | W3D_FMT_A8R8G8B8 | W3D_FMT_A8B8G8R8 | W3D_FMT_R8G8B8A8 | W3D_FMT_B8G8R8A8;
-	driver.name = "QuarkTex";
+	driver.name = "QuarkTex v0.53";
 	driver.swdriver = W3D_FALSE;
 	IntuitionBase = (struct IntuitionBase *)OpenLibrary("intuition.library", 39L);
 	GfxBase = (struct GfxBase *)OpenLibrary("graphics.library", 39L);

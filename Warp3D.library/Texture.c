@@ -70,6 +70,7 @@ W3D_Texture *W3D_AllocTexObj(__REGA0(W3D_Context *context), __REGA1(ULONG *error
 		case W3D_ATO_HEIGHT:
 			tex->texheight = ATOTags->ti_Data;
 			break;
+		//W3D_ATO_MIPMAPPTRS
 		}
 	}
 	if (swap[tex->texfmtsrc]) _glPixelStorei(GL_UNPACK_SWAP_BYTES, GL_TRUE);
@@ -211,7 +212,7 @@ ULONG W3D_FreeAllTexObj(__REGA0(W3D_Context *context)) {
 
 ULONG W3D_SetChromaTestBounds(__REGA0(W3D_Context *context), __REGA1(W3D_Texture *texture), __REGD0(ULONG rgba_lower), __REGD1(ULONG rgba_upper), __REGD2(ULONG mode)) {
 	LOG;
-	return W3D_SUCCESS;
+	return W3D_UNSUPPORTED;
 }
 
 /*

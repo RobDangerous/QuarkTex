@@ -74,8 +74,17 @@ ULONG W3D_SetCurrentPen(__REGA0(W3D_Context *context), __REGD1(ULONG pen)) {
 
 void W3D_SetScissor(__REGA0(W3D_Context *context), __REGA1(W3D_Scissor *scissor)) {
 	LOG;
-	_glScissor(scissor->left, scissor->top, scissor->width, scissor->height);
+	_glScissor(scissor->left,
+	height - (scissor->top + scissor->height),
+	//60,
+	scissor->width, scissor->height);
+	
+	//{0,50,630,370}
+	//640x480
+	
+	//480-(50+370)=60
 }
+
 void W3D_FlushFrame(__REGA0(W3D_Context *context)) {
 	LOG;
 	_glFinish();

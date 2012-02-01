@@ -1,6 +1,8 @@
 #include "w3d.h"
 
-/************************** Hardware/Driver functions ***************************/
+#include <proto/graphics.h>
+#include <proto/picasso96.h>
+
 ULONG W3D_CheckDriver(void) {
 	LOG;
 	return W3D_DRIVER_3DHW;
@@ -26,6 +28,11 @@ ULONG W3D_CheckIdle(__REGA0(W3D_Context *context)) {
 ULONG W3D_Query(__REGA0(W3D_Context *context), __REGD0(ULONG query), __REGD1(ULONG destfmt)) {
 	LOG;
 	if (query == W3D_Q_MAXTEXWIDTH || query == W3D_Q_MAXTEXHEIGHT) return 2048;
+	if (query == W3D_Q_STENCILBUFFER || query == W3D_Q_STENCIL_MASK
+		|| query == W3D_Q_STENCIL_FUNC || query == W3D_Q_STENCIL_SFAIL
+		|| query == W3D_Q_STENCIL_DPFAIL || query == W3D_Q_STENCIL_DPPASS
+		|| query == W3D_Q_STENCIL_WRMASK)
+	return W3D_NOT_SUPPORTED;
 	return W3D_FULLY_SUPPORTED;
 }
 ULONG W3D_GetTexFmtInfo(__REGA0(W3D_Context *context), __REGD0(ULONG texfmt), __REGD1(ULONG destfmt)) {
@@ -56,21 +63,49 @@ ULONG W3D_GetDriverTexFmtInfo(__REGA0(W3D_Driver* driver), __REGD0(ULONG query),
 }
 ULONG W3D_RequestMode(__REGA0(struct TagItem *taglist)) {
 	int i;
-	ULONG modeID = 0;
-	struct ScreenModeRequester *requester = AllocAslRequest(ASL_ScreenModeRequest, NULL);
+	//ULONG modeID = 0;
+	ULONG fmt = 0;
+	//struct ScreenModeRequester *requester = AllocAslRequest(ASL_ScreenModeRequest, NULL);
 	LOG;
 	for (i = 0; taglist[i].ti_Tag != TAG_DONE; ++i) {
 		switch (taglist[i].ti_Tag) {
 		case W3D_SMR_SIZEFILTER: taglist[i].ti_Tag = TAG_IGNORE; break;
 		case W3D_SMR_DRIVER: taglist[i].ti_Tag = TAG_IGNORE; break;
-		case W3D_SMR_DESTFMT: taglist[i].ti_Tag = TAG_IGNORE; break;
+		//case W3D_SMR_DESTFMT: taglist[i].ti_Tag = TAG_IGNORE; break;
+		case W3D_SMR_DESTFMT:
+			taglist[i].ti_Tag = P96MA_FormatsAllowed;
+			if (taglist[i].ti_Data & W3D_FMT_CLUT) fmt |= RGBFF_CLUT;
+			if (taglist[i].ti_Data & W3D_FMT_R5G5B5) fmt |= RGBFF_HICOLOR;
+			if (taglist[i].ti_Data & W3D_FMT_B5G5R5) fmt |= RGBFF_HICOLOR;
+			if (taglist[i].ti_Data & W3D_FMT_R5G5B5PC) fmt |= RGBFF_HICOLOR;
+			if (taglist[i].ti_Data & W3D_FMT_B5G5R5PC) fmt |= RGBFF_HICOLOR;
+			if (taglist[i].ti_Data & W3D_FMT_R5G6B5) fmt |= RGBFF_HICOLOR;
+			if (taglist[i].ti_Data & W3D_FMT_B5G6R5) fmt |= RGBFF_HICOLOR;
+			if (taglist[i].ti_Data & W3D_FMT_R5G6B5PC) fmt |= RGBFF_HICOLOR;
+			if (taglist[i].ti_Data & W3D_FMT_B5G6R5PC) fmt |= RGBFF_HICOLOR;
+			if (taglist[i].ti_Data & W3D_FMT_R8G8B8) fmt |= RGBFF_TRUECOLOR;
+			if (taglist[i].ti_Data & W3D_FMT_B8G8R8) fmt |= RGBFF_TRUECOLOR;
+			if (taglist[i].ti_Data & W3D_FMT_A8R8G8B8) fmt |= RGBFF_TRUEALPHA;
+			if (taglist[i].ti_Data & W3D_FMT_A8B8G8R8) fmt |= RGBFF_TRUEALPHA;
+			if (taglist[i].ti_Data & W3D_FMT_R8G8B8A8) fmt |= RGBFF_TRUEALPHA;
+			if (taglist[i].ti_Data & W3D_FMT_B8G8R8A8) fmt |= RGBFF_TRUEALPHA;
+			taglist[i].ti_Data = fmt;
+			break;
 		case W3D_SMR_TYPE: taglist[i].ti_Tag = TAG_IGNORE; break;
+		
+		case ASLSM_MinWidth: taglist[i].ti_Tag = P96MA_MinWidth; break;
+		case ASLSM_MinHeight: taglist[i].ti_Tag = P96MA_MinHeight; break;
+		case ASLSM_MaxWidth: taglist[i].ti_Tag = P96MA_MaxWidth; break;
+		case ASL_MaxHeight: taglist[i].ti_Tag = P96MA_MaxHeight; break;
+		case ASLSM_MinDepth: taglist[i].ti_Tag = P96MA_MinDepth; break;
+		case ASLSM_MaxDepth: taglist[i].ti_Tag = P96MA_MaxDepth; break;
 		}
 	}
-	AslRequest(requester, taglist);
-	modeID = requester->sm_DisplayID;
-	FreeAslRequest(requester);
-	return modeID;
+	//AslRequest(requester, taglist);
+	//modeID = requester->sm_DisplayID;
+	//FreeAslRequest(requester);
+	return p96RequestModeIDTagList(taglist);
+	//return modeID;
 }
 W3D_Driver *W3D_TestMode(__REGD0(ULONG ModeID)) {
 	LOG;
