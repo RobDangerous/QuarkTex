@@ -21,7 +21,7 @@ long wrap[] = {0, GL_REPEAT, GL_CLAMP };
 
 W3D_Texture *W3D_AllocTexObj(__REGA0(W3D_Context *context), __REGA1(ULONG *error), __REGA2(struct TagItem *ATOTags)) {
 	W3D_Texture *tex;
-	LOG
+	LOG;
 	tex = (W3D_Texture*) malloc(sizeof(W3D_Texture));
 
 	if (!firstTex) {
@@ -98,8 +98,9 @@ W3D_Texture *W3D_AllocTexObj(__REGA0(W3D_Context *context), __REGA1(ULONG *error
 	if (error) *error = W3D_SUCCESS;
 	return tex;
 }
+
 void W3D_FreeTexObj(__REGA0(W3D_Context *context), __REGA1(W3D_Texture *texture)) {
-	LOG
+	LOG;
 	if (texture->link.ln_Pred == NULL) { firstTex = texture->link.ln_Succ; if (firstTex != NULL) firstTex->ln_Pred = NULL; }
 	if (texture->link.ln_Succ == NULL && texture->link.ln_Pred != NULL) texture->link.ln_Pred->ln_Succ = NULL;
 	if (texture->link.ln_Pred != NULL && texture->link.ln_Succ != NULL) {
@@ -110,60 +111,94 @@ void W3D_FreeTexObj(__REGA0(W3D_Context *context), __REGA1(W3D_Texture *texture)
 	free(texture->driver);
 	free(texture);
 }
+
 void W3D_ReleaseTexture(__REGA0(W3D_Context *context), __REGA1(W3D_Texture *texture)) {
 	//free from video RAM
-	LOG
+	LOG;
 }
+
 void W3D_FlushTextures(__REGA0(W3D_Context *context)) {
 	//Release all textures from video ram
-	LOG
+	LOG;
 }
+
 ULONG W3D_SetFilter(__REGA0(W3D_Context *context), __REGA1(W3D_Texture *texture), __REGD0(ULONG MinFilter), __REGD1(ULONG MagFilter)) {
-	LOG
+	LOG;
 	((Texture*) texture->driver)->MinFilter = filter[MinFilter];
 	((Texture*) texture->driver)->MagFilter = filter[MagFilter];
+	_glBindTexture(GL_TEXTURE_2D, ((Texture*) texture->driver)->glID);
+	_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (long) ((Texture*) texture->driver)->MinFilter);
+	_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, (long) ((Texture*) texture->driver)->MagFilter);
 	return W3D_SUCCESS;
 }
+
+static float color[] = {0.0, 0.0, 0.0, 0.0};
+static long envs[] = {0, GL_REPLACE, GL_DECAL, GL_MODULATE, GL_BLEND};
+
 ULONG W3D_SetTexEnv(__REGA0(W3D_Context *context), __REGA1(W3D_Texture *texture), __REGD1(ULONG envparam), __REGA2(W3D_Color *envcolor)) {
-	W3D_Color *color = (W3D_Color*) malloc(sizeof(W3D_Color));
-	LOG
-	*color = *envcolor;
+	W3D_Color *pcolor;
+	LOG;
+	pcolor = (W3D_Color*) malloc(sizeof(W3D_Color));
+	*pcolor = *envcolor;
 	((Texture*) texture->driver)->envparam = envparam;
-	((Texture*) texture->driver)->envcolor.r = color->r;
-	((Texture*) texture->driver)->envcolor.g = color->g;
-	((Texture*) texture->driver)->envcolor.b = color->b;
-	((Texture*) texture->driver)->envcolor.a = color->a;
+	((Texture*) texture->driver)->envcolor.r = pcolor->r;
+	((Texture*) texture->driver)->envcolor.g = pcolor->g;
+	((Texture*) texture->driver)->envcolor.b = pcolor->b;
+	((Texture*) texture->driver)->envcolor.a = pcolor->a;
+	_glBindTexture(GL_TEXTURE_2D, ((Texture*) texture->driver)->glID);
+	if (((Texture*) texture->driver)->envparam) _glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, envs[((Texture*) texture->driver)->envparam]);
+	if (((Texture*) texture->driver)->envparam == W3D_BLEND) {
+		color[0] = ((Texture*) texture->driver)->envcolor.r; color[1] = ((Texture*) texture->driver)->envcolor.b;
+		color[2] = ((Texture*) texture->driver)->envcolor.g; color[3] = ((Texture*) texture->driver)->envcolor.a;
+		SWAP32(color, 4)
+		_glTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, (GLfloat*) (memoffset + (long) color));
+	}
 	return W3D_SUCCESS;
 }
+
 ULONG W3D_SetWrapMode(__REGA0(W3D_Context *context), __REGA1(W3D_Texture *texture), __REGD0(ULONG s_mode), __REGD1(ULONG t_mode), __REGA2(W3D_Color *bordercolor)) {
-	LOG
+	LOG;
 	((Texture*) texture->driver)->s_mode = wrap[s_mode];
 	((Texture*) texture->driver)->t_mode = wrap[t_mode];
 	((Texture*) texture->driver)->bordercolor.r = bordercolor->r;
 	((Texture*) texture->driver)->bordercolor.g = bordercolor->g;
 	((Texture*) texture->driver)->bordercolor.b = bordercolor->b;
 	((Texture*) texture->driver)->bordercolor.a = bordercolor->a;
+	_glBindTexture(GL_TEXTURE_2D, ((Texture*) texture->driver)->glID);
+	if (((Texture*) texture->driver)->s_mode) _glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, (long) ((Texture*) texture->driver)->s_mode);
+	if (((Texture*) texture->driver)->t_mode) _glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, (long) ((Texture*) texture->driver)->t_mode);
+	color[0] = ((Texture*) texture->driver)->bordercolor.r; color[1] = ((Texture*) texture->driver)->bordercolor.b;
+	color[2] = ((Texture*) texture->driver)->bordercolor.g; color[3] = ((Texture*) texture->driver)->bordercolor.a;
+	SWAP32(color, 4)
+	_glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, (GLfloat*) (memoffset + (long) color));
 	return W3D_SUCCESS;
 }
+
 ULONG W3D_UpdateTexImage(__REGA0(W3D_Context *context), __REGA1(W3D_Texture *texture), __REGA2(void *teximage), __REGD1(int level), __REGA3(ULONG *palette)) {
-	LOG
+	LOG;
 	texture->texsource = teximage;
 	_glBindTexture(GL_TEXTURE_2D, ((Texture*) texture->driver)->glID);
     _glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, texture->texwidth, texture->texheight, formats[texture->texfmtsrc], types[texture->texfmtsrc], (void*) (memoffset + (int) texture->texsource));
 	return W3D_SUCCESS;
 }
+
 ULONG W3D_UpdateTexSubImage(__REGA0(W3D_Context *context), __REGA1(W3D_Texture *texture), __REGA2(void *teximage), __REGD1(ULONG level), __REGA3(ULONG *palette), __REGA4(W3D_Scissor* scissor), __REGD0(ULONG srcbpr)) {
-	LOG
+	LOG;
 	if (srcbpr == 0) {
 		_glBindTexture(GL_TEXTURE_2D, ((Texture*) texture->driver)->glID);
 		_glTexSubImage2D(GL_TEXTURE_2D, 0, scissor->left, scissor->top, scissor->width, scissor->height, formats[texture->texfmtsrc], types[texture->texfmtsrc], (void*) (memoffset + (int) texture->texsource));
 	}
 	return W3D_SUCCESS;
 }
-ULONG W3D_UploadTexture(__REGA0(W3D_Context *context), __REGA1(W3D_Texture *texture)) { LOG return W3D_SUCCESS; }
+
+ULONG W3D_UploadTexture(__REGA0(W3D_Context *context), __REGA1(W3D_Texture *texture)) {
+	LOG;
+	return W3D_SUCCESS;
+}
+
 ULONG W3D_FreeAllTexObj(__REGA0(W3D_Context *context)) {
 	W3D_Texture *n;
-	LOG
+	LOG;
 	for (n = (W3D_Texture*) firstTex; n != NULL;) {
 		if (((Texture*) n->driver)->glID) _glDeleteTextures(1, (GLuint*) (memoffset + (long) &((Texture*) n->driver)->glID));
 		n = (W3D_Texture*) n->link.ln_Succ;
@@ -173,8 +208,11 @@ ULONG W3D_FreeAllTexObj(__REGA0(W3D_Context *context)) {
 	firstTex = NULL;
 	return W3D_SUCCESS;
 }
-ULONG W3D_SetChromaTestBounds(__REGA0(W3D_Context *context), __REGA1(W3D_Texture *texture), __REGD0(ULONG rgba_lower), __REGD1(ULONG rgba_upper), __REGD2(ULONG mode)) { LOG return W3D_SUCCESS; }
 
+ULONG W3D_SetChromaTestBounds(__REGA0(W3D_Context *context), __REGA1(W3D_Texture *texture), __REGD0(ULONG rgba_lower), __REGD1(ULONG rgba_upper), __REGD2(ULONG mode)) {
+	LOG;
+	return W3D_SUCCESS;
+}
 
 /*
 long swap[] = {0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0};

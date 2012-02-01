@@ -1,0 +1,3 @@
+done:
+Reset-Fix in quarktex.alib
+todo:

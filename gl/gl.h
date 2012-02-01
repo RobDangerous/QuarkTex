@@ -76,8 +76,11 @@ extern int i;
 		bp[4] = b;					\
 	}
 
-#define PUSHREGS __asm("movem.l a2-a6/d2-d7,-(a7)")
-
-#define POPREGS __asm("movem.l (a7)+,a2-a6/d2-d7")
+//#define PUSHREGS
+//#define POPREGS
+//#define PUSHREGS __asm("movem.l a2-a6/d2-d7,-(a7)"); __asm("fmovem.x fp0-fp7,-(a7)")
+//#define POPREGS __asm("fmovem.x (a7)+,fp0-fp7"); __asm("movem.l (a7)+,a2-a6/d2-d7")
+//#define PUSHREGS __asm("movem.l a2-a6/d2-d7,-(a7)")
+//#define POPREGS __asm("movem.l (a7)+,a2-a6/d2-d7")
 
 #endif

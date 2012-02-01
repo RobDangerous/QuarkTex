@@ -102,7 +102,7 @@ void AmigaMesaDestroyVisual(struct amigamesa_visual *v __asm("a0")) {
 void AmigaMesaMakeCurrent(struct amigamesa_context *amesa __asm("a0"), struct amigamesa_buffer *b __asm("a1")) {LOG}
 void AmigaMesaSwapBuffers(struct amigamesa_context *amesa __asm("a0")) {
 	LOG
-	if (fullscreen && (left != window->LeftEdge + window->BorderLeft || top != window->TopEdge + window->BorderTop ||
+	if (!fullscreen && (left != window->LeftEdge + window->BorderLeft || top != window->TopEdge + window->BorderTop ||
 		width != window->Width - (window->BorderLeft + window->BorderRight) || height != window->Height - (window->BorderTop + window->BorderBottom))) {
 		left = window->LeftEdge + window->BorderLeft;
 		top = window->TopEdge + window->BorderTop;

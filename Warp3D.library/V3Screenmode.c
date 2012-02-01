@@ -4,17 +4,17 @@
 #include <proto/picasso96.h>
 
 W3D_ScreenMode *W3D_GetScreenmodeList(void) {
-	LOG
+	LOG;
 	return NULL;
 }
 
 void W3D_FreeScreenmodeList(__REGA0(W3D_ScreenMode *list)) {
-	LOG
+	LOG;
 }
 
 ULONG W3D_BestModeID(__REGA0(struct TagItem *tags)) {
 	int i;
-	LOG
+	LOG;
 	for (i = 0; tags[i].ti_Tag != TAG_DONE; ++i) {
 		switch (tags[i].ti_Tag) {
 		case W3D_BMI_DRIVER: tags[i].ti_Tag = TAG_IGNORE; break;

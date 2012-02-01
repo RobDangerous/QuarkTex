@@ -7,13 +7,11 @@ GLvoid *vertexPtr = NULL;
 
 void glVertexPointer(GLint size __asm("d0"), GLenum type __asm("d1"), GLsizei stride __asm("d2"), GLvoid *ptr __asm("a0")) {
 	LOG;
-	PUSHREGS;
 	vertexSize = size;
 	vertexType = type;
 	vertexStride = stride;
 	vertexPtr = ptr;
 	_glVertexPointer(size, type, stride, memoffset + (long) ptr);
-	POPREGS;
 }
 
 inline void vertex(int i) {
@@ -63,12 +61,10 @@ GLvoid *normalPtr = NULL;
 
 void glNormalPointer(GLenum type __asm("d0"), GLsizei stride __asm("d1"), GLvoid *ptr __asm("a0")) {
 	LOG;
-	PUSHREGS;
 	normalType = type;
 	normalStride = stride;
 	normalPtr = ptr;
 	_glNormalPointer(type, stride, memoffset + (long) ptr);
-	POPREGS;
 }
 
 inline void normal(int i) {
@@ -108,13 +104,11 @@ GLvoid *colorPtr = NULL;
 
 void glColorPointer(GLint size __asm("d0"), GLenum type __asm("d1"), GLsizei stride __asm("d2"), GLvoid *ptr __asm("a0")) {
 	LOG;
-	PUSHREGS;
 	colorSize = size;
 	colorType = type;
 	colorStride = stride;
 	colorPtr = ptr;
 	_glColorPointer(size, type, stride, memoffset + (long) ptr);
-	POPREGS;
 }
 
 
@@ -193,12 +187,10 @@ GLvoid *indexPtr = NULL;
 
 void glIndexPointer(GLenum type __asm("d0"), GLsizei stride __asm("d1"), GLvoid *ptr __asm("a0")) {
 	LOG;
-	PUSHREGS;
 	indexType = type;
 	indexStride = stride;
 	indexPtr = ptr;
 	_glIndexPointer(type, stride, memoffset + (long) ptr);
-	POPREGS;
 }
 
 inline void index(int i) {
@@ -238,13 +230,11 @@ GLvoid *texCoordPtr = NULL;
 
 void glTexCoordPointer(GLint size __asm("d0"), GLenum type __asm("d1"), GLsizei stride __asm("d2"), GLvoid *ptr __asm("a0")) {
 	LOG;
-	PUSHREGS;
 	texCoordSize = size;
 	texCoordType = type;
 	texCoordStride = stride;
 	texCoordPtr = ptr;
 	_glTexCoordPointer(size, type, stride, memoffset + (long) ptr);
-	POPREGS;
 }
 
 inline void texCoord(int i) {
@@ -296,11 +286,9 @@ GLsizei edgeFlagStride;
 GLboolean *edgeFlagPtr = NULL;
 void glEdgeFlagPointer(GLsizei stride __asm("d0"), GLboolean *ptr __asm("a0")) {
 	LOG;
-	PUSHREGS;
 	edgeFlagStride = stride;
 	edgeFlagPtr = ptr;
 	_glEdgeFlagPointer(stride, memoffset + (long) ptr);
-	POPREGS;
 }
 
 inline void edgeFlag(int i) {
@@ -310,21 +298,17 @@ inline void edgeFlag(int i) {
 
 void glGetPointerv(GLenum pname __asm("d0"), GLvoid *params __asm("a0")) {
 	LOG;
-	PUSHREGS;
 	_glGetPointerv(pname, memoffset + (long) params);
 	SWAP32(params, 1);
-	POPREGS;
 }
 void glArrayElement(GLint i __asm("d0")) {
 	LOG;
-	PUSHREGS;
 	if (_glIsEnabled(GL_EDGE_FLAG_ARRAY)) edgeFlag(i);
 	if (_glIsEnabled(GL_TEXTURE_COORD_ARRAY)) texCoord(i);
 	if (_glIsEnabled(GL_INDEX_ARRAY)) index(i);
 	if (_glIsEnabled(GL_COLOR_ARRAY)) color(i);
 	if (_glIsEnabled(GL_NORMAL_ARRAY)) normal(i);
 	if (_glIsEnabled(GL_VERTEX_ARRAY)) vertex(i);
-	POPREGS;
 }
 
 void glDrawArrays(GLenum mode __asm("d0"), GLint first __asm("d1"), GLsizei count __asm("d2")) {
@@ -336,7 +320,6 @@ void glDrawArrays(GLenum mode __asm("d0"), GLint first __asm("d1"), GLsizei coun
 	GLboolean normalOn = _glIsEnabled(GL_NORMAL_ARRAY);
 	GLboolean vertexOn = _glIsEnabled(GL_VERTEX_ARRAY);
 	LOG;
-	PUSHREGS;
 	_glBegin(mode);
 	for (i = first; i < first + count; ++i) {
 		if (edgeFlagOn) edgeFlag(i);
@@ -347,7 +330,6 @@ void glDrawArrays(GLenum mode __asm("d0"), GLint first __asm("d1"), GLsizei coun
 		if (vertexOn) vertex(i);
 	}
 	_glEnd();
-	POPREGS;
 }
 
 void glDrawElements(GLenum mode __asm("d0"), GLsizei count __asm("d1"), GLenum type __asm("d2"), GLvoid *indices __asm("a0")) {
@@ -362,7 +344,6 @@ void glDrawElements(GLenum mode __asm("d0"), GLsizei count __asm("d1"), GLenum t
 	GLboolean normalOn = _glIsEnabled(GL_NORMAL_ARRAY);
 	GLboolean vertexOn = _glIsEnabled(GL_VERTEX_ARRAY);
 	LOG;
-	PUSHREGS;
 	_glBegin(mode);
 	switch (type) {
 	case GL_UNSIGNED_BYTE:
@@ -400,7 +381,6 @@ void glDrawElements(GLenum mode __asm("d0"), GLsizei count __asm("d1"), GLenum t
 		break;
 	}
 	_glEnd();
-	POPREGS;
 }
 void glInterleavedArrays(GLenum format __asm("d0"), GLsizei stride __asm("d1"), GLvoid *pointer __asm("a0")) {
 	LOG;

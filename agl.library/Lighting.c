@@ -1,11 +1,10 @@
 #include "../gl/gl.h"
 
-void glShadeModel(GLenum mode __asm("d0")) { LOG; PUSHREGS; _glShadeModel(mode); POPREGS; }
-void glLightf(GLenum light __asm("d0"), GLenum pname __asm("d1"), GLfloat param __asm("fp0")) { LOG; PUSHREGS; _glLightf(light, pname, param); POPREGS; }
-void glLighti(GLenum light __asm("d0"), GLenum pname __asm("d1"), GLint param __asm("d2")) { LOG; PUSHREGS; _glLighti(light, pname, param); POPREGS; }
+void glShadeModel(GLenum mode __asm("d0")) { LOG; _glShadeModel(mode); }
+void glLightf(GLenum light __asm("d0"), GLenum pname __asm("d1"), GLfloat param __asm("fp0")) { LOG; _glLightf(light, pname, param); }
+void glLighti(GLenum light __asm("d0"), GLenum pname __asm("d1"), GLint param __asm("d2")) { LOG; _glLighti(light, pname, param); }
 void glLightfv(GLenum light __asm("d0"), GLenum pname __asm("d1"), GLfloat *params __asm("a0")) {
 	LOG;
-	PUSHREGS;
 	switch (pname) {
 	case GL_AMBIENT:
 	case GL_DIFFUSE:
@@ -43,11 +42,9 @@ void glLightfv(GLenum light __asm("d0"), GLenum pname __asm("d1"), GLfloat *para
 		SWAP32(params, 1);
 		break;
 	}
-	POPREGS;
 }
 void glLightiv(GLenum light __asm("d0"), GLenum pname __asm("d1"), GLint *params __asm("a0")) {
 	LOG;
-	PUSHREGS;
 	switch (pname) {
 	case GL_AMBIENT:
 	case GL_DIFFUSE:
@@ -85,11 +82,9 @@ void glLightiv(GLenum light __asm("d0"), GLenum pname __asm("d1"), GLint *params
 		SWAP32(params, 1);
 		break;
 	}
-	POPREGS;
 }
 void glGetLightfv(GLenum light __asm("d0"), GLenum pname __asm("d1"), GLfloat *params __asm("a0")) {
 	LOG;
-	PUSHREGS;
 	_glGetLightfv(light, pname, memoffset + (long) params);
 	switch (pname) {
 	case GL_AMBIENT:
@@ -109,11 +104,9 @@ void glGetLightfv(GLenum light __asm("d0"), GLenum pname __asm("d1"), GLfloat *p
 		SWAP32(params, 1);
 		break;
 	}
-	POPREGS;
 }
 void glGetLightiv(GLenum light __asm("d0"), GLenum pname __asm("d1"), GLint *params __asm("a0")) {
 	LOG;
-	PUSHREGS;
 	_glGetLightiv(light, pname, memoffset + (long) params);
 	switch (pname) {
 	case GL_AMBIENT:
@@ -133,13 +126,11 @@ void glGetLightiv(GLenum light __asm("d0"), GLenum pname __asm("d1"), GLint *par
 		SWAP32(params, 1);
 		break;
 	}
-	POPREGS;
 }
-void glLightModelf(GLenum pname __asm("d0"), GLfloat param __asm("fp0")) { LOG; PUSHREGS; _glLightModelf(pname, param); POPREGS; }
-void glLightModeli(GLenum pname __asm("d0"), GLint param __asm("d1")) { LOG; PUSHREGS; _glLightModeli(pname, param); POPREGS; }
+void glLightModelf(GLenum pname __asm("d0"), GLfloat param __asm("fp0")) { LOG; _glLightModelf(pname, param); }
+void glLightModeli(GLenum pname __asm("d0"), GLint param __asm("d1")) { LOG; _glLightModeli(pname, param); }
 void glLightModelfv(GLenum pname __asm("d0"), GLfloat *params __asm("a0")) {
 	LOG;
-	PUSHREGS;
 	switch (pname) {
 	case GL_LIGHT_MODEL_AMBIENT:
 		SWAP32(params, 4);
@@ -159,11 +150,9 @@ void glLightModelfv(GLenum pname __asm("d0"), GLfloat *params __asm("a0")) {
 		SWAP32(params, 1);
 		break;
 	}
-	POPREGS;
 }
 void glLightModeliv(GLenum pname __asm("d0"), GLint *params __asm("a0")) {
 	LOG;
-	PUSHREGS;
 	switch (pname) {
 	case GL_LIGHT_MODEL_AMBIENT:
 		SWAP32(params, 4);
@@ -183,13 +172,11 @@ void glLightModeliv(GLenum pname __asm("d0"), GLint *params __asm("a0")) {
 		SWAP32(params, 1);
 		break;
 	}
-	POPREGS;
 }
-void glMaterialf(GLenum face __asm("d0"), GLenum pname __asm("d1"), GLfloat param __asm("fp0")) { LOG; PUSHREGS; _glMaterialf(face, pname, param); POPREGS; }
-void glMateriali(GLenum face __asm("d0"), GLenum pname __asm("d1"), GLint param __asm("d2")) { LOG; PUSHREGS; _glMateriali(face, pname, param); POPREGS; }
+void glMaterialf(GLenum face __asm("d0"), GLenum pname __asm("d1"), GLfloat param __asm("fp0")) { LOG; _glMaterialf(face, pname, param); }
+void glMateriali(GLenum face __asm("d0"), GLenum pname __asm("d1"), GLint param __asm("d2")) { LOG; _glMateriali(face, pname, param); }
 void glMaterialfv(GLenum face __asm("d0"), GLenum pname __asm("d1"), GLfloat *params __asm("a0")) {
 	LOG;
-	PUSHREGS;
 	switch (pname) {
 	case GL_AMBIENT:
 	case GL_DIFFUSE:
@@ -221,11 +208,9 @@ void glMaterialfv(GLenum face __asm("d0"), GLenum pname __asm("d1"), GLfloat *pa
 		SWAP32(params, 1);
 		break;
 	}
-	POPREGS;
 }
 void glMaterialiv(GLenum face __asm("d0"), GLenum pname __asm("d1"), GLint *params __asm("a0")) {
 	LOG;
-	PUSHREGS;
 	switch (pname) {
 	case GL_AMBIENT:
 	case GL_DIFFUSE:
@@ -257,11 +242,9 @@ void glMaterialiv(GLenum face __asm("d0"), GLenum pname __asm("d1"), GLint *para
 		SWAP32(params, 1);
 		break;
 	}
-	POPREGS;
 }
 void glGetMaterialfv(GLenum face __asm("d0"), GLenum pname __asm("d1"), GLfloat *params __asm("a0")) {
 	LOG;
-	PUSHREGS;
 	_glGetMaterialfv(face, pname, memoffset + (long) params);
 	switch (pname) {
 	case GL_AMBIENT:
@@ -278,11 +261,9 @@ void glGetMaterialfv(GLenum face __asm("d0"), GLenum pname __asm("d1"), GLfloat 
 		SWAP32(params, 1);
 		break;
 	}
-	POPREGS;
 }
 void glGetMaterialiv(GLenum face __asm("d0"), GLenum pname __asm("d1"), GLint *params __asm("a0")) {
 	LOG;
-	PUSHREGS;
 	_glGetMaterialiv(face, pname, memoffset + (long) params);
 	switch (pname) {
 	case GL_AMBIENT:
@@ -299,6 +280,5 @@ void glGetMaterialiv(GLenum face __asm("d0"), GLenum pname __asm("d1"), GLint *p
 		SWAP32(params, 1);
 		break;
 	}
-	POPREGS;
 }
-void glColorMaterial(GLenum face __asm("d0"), GLenum mode __asm("d1")) { LOG; PUSHREGS; _glColorMaterial(face, mode); POPREGS; }
+void glColorMaterial(GLenum face __asm("d0"), GLenum mode __asm("d1")) { LOG; _glColorMaterial(face, mode); }

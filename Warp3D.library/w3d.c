@@ -25,7 +25,7 @@ long envs[] = {0, GL_REPLACE, GL_DECAL, GL_MODULATE, GL_BLEND};
 
 void INIT_0_Warp3D(void) {
 	glInit();
-	LOG
+	LOG;
 	driver.ChipID = W3D_CHIP_RADEON;
 	driver.formats = W3D_FMT_CLUT | W3D_FMT_R5G5B5 | W3D_FMT_B5G5R5 | W3D_FMT_R5G5B5PC | W3D_FMT_B5G5R5PC |
 		W3D_FMT_R5G6B5 | W3D_FMT_B5G6R5 | W3D_FMT_R5G6B5PC | W3D_FMT_B5G6R5PC | W3D_FMT_R8G8B8 |
@@ -38,7 +38,7 @@ void INIT_0_Warp3D(void) {
 }
 
 void EXIT_0_Warp3D(void) {
-	LOG
+	LOG;
 	glExit();
 	if (IntuitionBase) CloseLibrary((struct Library *)IntuitionBase);
 	if (GfxBase) CloseLibrary((struct Library *)GfxBase);
@@ -53,7 +53,7 @@ void bindTexture(W3D_Texture* tex) {
 	//if (tex == lasttex || !tex) return;
 	if (!tex) return;
 	_glBindTexture(GL_TEXTURE_2D, ((Texture*) tex->driver)->glID);
-	if (((Texture*) tex->driver)->envparam) _glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, envs[((Texture*) tex->driver)->envparam]);
+	/*if (((Texture*) tex->driver)->envparam) _glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, envs[((Texture*) tex->driver)->envparam]);
 	if (((Texture*) tex->driver)->envparam == W3D_BLEND) {
 		color[0] = ((Texture*) tex->driver)->envcolor.r; color[1] = ((Texture*) tex->driver)->envcolor.b;
 		color[2] = ((Texture*) tex->driver)->envcolor.g; color[3] = ((Texture*) tex->driver)->envcolor.a;
@@ -67,7 +67,7 @@ void bindTexture(W3D_Texture* tex) {
 	color[0] = ((Texture*) tex->driver)->bordercolor.r; color[1] = ((Texture*) tex->driver)->bordercolor.b;
 	color[2] = ((Texture*) tex->driver)->bordercolor.g; color[3] = ((Texture*) tex->driver)->bordercolor.a;
 	SWAP32(color, 4)
-	_glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, (GLfloat*) (memoffset + (long) color));
+	_glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, (GLfloat*) (memoffset + (long) color));*/
 	//lasttex = tex;
 }
 

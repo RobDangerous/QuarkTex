@@ -2,7 +2,7 @@
 #include <windows.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-//#include <fstream>
+#include <fstream>
 //#include <strstream>
 
 #define DLL extern "C" __declspec(dllexport)
@@ -46,18 +46,44 @@ namespace {
 			return DefWindowProc(hwnd, message, wParam, lParam);
 		}
 	}
+
+	unsigned oldnum;
+	bool registered = false;
 }
 
-//std::ofstream out("QuarkTexLog.txt");
+std::ofstream* out;
+bool logcreated = false;
 
 DLL void logString(char* c) {
-	//out << c;
-	//out.flush();
+	if (!logcreated) out = new std::ofstream("QuarkTexLog.txt");
+	*out << c << std::endl;
+}
+
+//                    d1   d2   d3   d4   d5   d6   d7   a1   a2   a3   a4   a5          a6
+DLL void freeContext(int, int, int, int, int, int, int, int, int, int, int, int, winuae* a6) {
+	if (glContext) {
+		wglMakeCurrent(0, 0);
+		wglDeleteContext(glContext);
+		glContext = 0;
+	}
+	if (deviceContext) {
+		ReleaseDC(a6->amigawnd, deviceContext);
+		deviceContext = 0;
+	}
+	if (windowHandle) {
+		DestroyWindow(windowHandle);
+		windowHandle = 0;
+	}
+
+	UnregisterClass("QuarkTex", instance);
+	registered = false;
 }
 
 int cleft, ctop, cwidth, cheight;
 //                          d1       d2         d3          d4   d5   d6   d7   a1   a2   a3   a4   a5          a6
 DLL int createContext(int left, int top, int width, int height, int, int, int, int, int, int, int, int, winuae* a6) {
+	if (!instance) instance = GetModuleHandle(0);
+	if (registered) UnregisterClass("QuarkTex", instance);
 	cleft = left; ctop = top; cwidth = width; cheight = height;
 //	std::strstream str;
 //	str << "Creating Context(left: " << left << ", top: " << top << ", width: " << width << ", height: " << height << ")\n";
@@ -76,8 +102,6 @@ DLL int createContext(int left, int top, int width, int height, int, int, int, i
 		top += rect.top;
 	}
 
-	if (!instance) instance = GetModuleHandle(0);
-
 	WNDCLASS wc;
 	memset(&wc, 0, sizeof(WNDCLASS));
 	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
@@ -88,6 +112,7 @@ DLL int createContext(int left, int top, int width, int height, int, int, int, i
 	wc.lpszClassName = "QuarkTex";
 
 	if (!RegisterClass(&wc)) { logString("Warning: Could not register Window Class"); return 0; }
+	registered = true;
 
 	if (!(windowHandle = CreateWindowEx(0, "QuarkTex", "", WS_CHILD | WS_VISIBLE, left, top, width, height, a6->amigawnd, 0, 0, 0))) logString("Warning: Could not create Window");
 	if (!(deviceContext = GetDC(windowHandle))) { logString("Warning: Could not get Device Context"); return 0; }
@@ -114,7 +139,7 @@ DLL int createContext(int left, int top, int width, int height, int, int, int, i
 	glScalef(2.0f / static_cast<float>(width), -2.0f / static_cast<float>(height), 1.0f);
 	glTranslatef(-(static_cast<float>(width) / 2.0f), -(static_cast<float>(height) / 2.0f), 0.0f);
 
-	logString("Rendering context successfully created and activated");
+	//logString("Rendering context successfully created and activated");
 	return 1;
 }
 
@@ -122,35 +147,15 @@ DLL void moveWindow(int left, int top, int width, int height) {
 	MoveWindow(windowHandle, left, top, width, height, FALSE);
 }
 
-//                    d1   d2   d3   d4   d5   d6   d7   a1   a2   a3   a4   a5          a6
-DLL void freeContext(int, int, int, int, int, int, int, int, int, int, int, int, winuae* a6) {
-	if (glContext) {
-		wglMakeCurrent(0, 0);
-		wglDeleteContext(glContext);
-		glContext = 0;
-	}
-	if (deviceContext) {
-		ReleaseDC(a6->amigawnd, deviceContext);
-		deviceContext = 0;
-	}
-	if (windowHandle) {
-		DestroyWindow(windowHandle);
-		windowHandle = 0;
-	}
-
-	UnregisterClass("QuarkTex", instance);
-}
-
 DLL void swapBuffers(int, int, int, int, int, int, int, int, int, int, int, int, winuae* a6) {
-	static unsigned oldnum;
-	if (screenlost(a6, oldnum)) logString("Warning: Screen Lost");
+	//static unsigned oldnum;
+	//if (screenlost(a6, oldnum)) logString("Warning: Screen Lost");
 	SwapBuffers(deviceContext);
 	//glClear(GL_COLOR_BUFFER_BIT);
-	/*GLenum code = glGetError();
-	if (code!=GL_NO_ERROR) logString("GL Error!\n");
-	while (code!=GL_NO_ERROR)
-	{
+	
+	GLenum code = glGetError();
+	while (code != GL_NO_ERROR) {
 		logString((char *) gluErrorString(code));
 		code = glGetError();
-	}*/
+	}
 }

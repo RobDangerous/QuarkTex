@@ -19,7 +19,7 @@ ULONG (*oldchangescreenbuffer)(VOID) = NULL;
 ULONG (*oldClipBlit)(VOID) = NULL;
 
 static ULONG W3D_ClipBlit(VOID) {
-	LOG
+	LOG;
 	if (left != window->LeftEdge + window->BorderLeft || top != window->TopEdge + window->BorderTop) {
 		left = window->LeftEdge + window->BorderLeft;
 		top = window->TopEdge + window->BorderTop;
@@ -35,12 +35,18 @@ VOID W3D_RectFill(__REGA1(struct RastPort *rp), __REGD0(LONG xMin), __REGD1(LONG
 
 /************************** Context functions ***********************************/
 W3D_Context *W3D_CreateContext(__REGA0(ULONG *error),__REGA1(struct TagItem *CCTags)) {
-	struct Window* firstWindow = NULL;
-	struct BitMap* bitmap = NULL;
-	unsigned int bla = 4 * 800 * 600;
-	void *fake = malloc(bla);
-	W3D_Context *context = (W3D_Context*) malloc(sizeof(W3D_Context));
-	LOG
+	struct Window* firstWindow;
+	struct BitMap* bitmap;
+	unsigned int bla;
+	void *fake;
+	W3D_Context *context;
+	LOG;
+	firstWindow = NULL;
+	bitmap = NULL;
+	bla = 4 * 800 * 600;
+	fake = malloc(bla);
+	
+	context = (W3D_Context*) malloc(sizeof(W3D_Context));
 	context->driver = NULL; context->gfxdriver = NULL; context->drivertype = 0;
 	context->regbase = NULL; context->vmembase = NULL;
 	context->zbuffer = NULL; context->stencilbuffer = NULL;
@@ -88,7 +94,6 @@ W3D_Context *W3D_CreateContext(__REGA0(ULONG *error),__REGA1(struct TagItem *CCT
 		}*/
 		createContext(window->LeftEdge + window->BorderLeft, window->TopEdge + window->BorderTop,
 			window->Width - (window->BorderLeft + window->BorderRight), window->Height - (window->BorderTop + window->BorderBottom));
-
 		left = window->LeftEdge + window->BorderLeft;
 		top = window->TopEdge + window->BorderTop;
 		width = window->Width - (window->BorderLeft + window->BorderRight);
@@ -101,8 +106,9 @@ W3D_Context *W3D_CreateContext(__REGA0(ULONG *error),__REGA1(struct TagItem *CCT
 	if (error) *error = W3D_SUCCESS;
 	return context;
 }
+
 void W3D_DestroyContext(__REGA0(W3D_Context *context)) {
-	LOG
+	LOG;
 	if (fullscreen) {
 		SetFunction((struct Library *)GfxBase, -588, oldscrollvport);
 		SetFunction((struct Library *)GfxBase, -810, olderaserect);
@@ -116,12 +122,12 @@ void W3D_DestroyContext(__REGA0(W3D_Context *context)) {
 	freeContext();
 }
 ULONG W3D_GetState(__REGA0(W3D_Context *context), __REGD1(ULONG state)) {
-	LOG
+	LOG;
 	if (context->state & state) return W3D_ENABLED;
 	return W3D_DISABLED;
 }
 ULONG W3D_SetState(W3D_Context *context __asm("a0"), ULONG state __asm("d0"), ULONG action __asm("d1")) {
-	LOG
+	LOG;
 	if (action == W3D_ENABLE) {
 		context->state |= state;
 		switch (state) {
@@ -187,6 +193,6 @@ ULONG W3D_SetState(W3D_Context *context __asm("a0"), ULONG state __asm("d0"), UL
 	return W3D_SUCCESS;
 }
 ULONG W3D_Hint(__REGA0(W3D_Context *context), __REGD0(ULONG mode), __REGD1(ULONG quality)) {
-	LOG
+	LOG;
 	return W3D_SUCCESS;
 }

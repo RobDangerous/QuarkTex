@@ -4,7 +4,7 @@ unsigned int primitives[] = {GL_TRIANGLES, GL_TRIANGLE_FAN, GL_TRIANGLE_STRIP, G
 int envs[] = {0, GL_REPLACE, GL_DECAL, GL_MODULATE, GL_BLEND};
 
 ULONG W3D_VertexPointer(__REGA0(W3D_Context* context), __REGA1(void *pointer), __REGD0(int stride), __REGD1(ULONG mode), __REGD2(ULONG flags)) {
-	LOG
+	LOG;
 	context->VertexPointer = pointer;
 	context->VPStride = stride;
 	context->VPMode = mode;
@@ -12,7 +12,7 @@ ULONG W3D_VertexPointer(__REGA0(W3D_Context* context), __REGA1(void *pointer), _
 	return W3D_SUCCESS;
 }
 ULONG W3D_TexCoordPointer(__REGA0(W3D_Context* context), __REGA1(void *pointer), __REGD0(int stride), __REGD1(int unit), __REGD2(int off_v), __REGD3(int off_w), __REGD4(ULONG flags)) {
-	LOG
+	LOG;
 	context->TexCoordPointer[0] = pointer;
 	context->TPStride[0] = stride;
 	context->TPVOffs[0] = off_v;
@@ -21,7 +21,7 @@ ULONG W3D_TexCoordPointer(__REGA0(W3D_Context* context), __REGA1(void *pointer),
 	return W3D_SUCCESS;
 }
 ULONG W3D_ColorPointer(__REGA0(W3D_Context* context), __REGA1(void *pointer), __REGD0(int stride), __REGD1(ULONG format), __REGD2(ULONG mode), __REGD3(ULONG flags)) {
-	LOG
+	LOG;
 	context->ColorPointer = (UBYTE*) pointer;
 	context->CPStride = stride;
 	context->CPMode = mode | format;
@@ -29,7 +29,7 @@ ULONG W3D_ColorPointer(__REGA0(W3D_Context* context), __REGA1(void *pointer), __
 	return W3D_SUCCESS;
 }
 ULONG W3D_BindTexture(__REGA0(W3D_Context* context), __REGD0(ULONG tmu), __REGA1(W3D_Texture *texture)) {
-	LOG
+	LOG;
 	context->CurrentTex[0] = texture;
 	return W3D_SUCCESS;
 }
@@ -70,8 +70,10 @@ inline void setTexture(W3D_Context* context, unsigned int i) {
 }
 
 inline void drawV(W3D_Context* context, unsigned int i) {
-	W3D_Float* fp = NULL;
-	W3D_Double* dp = NULL;
+	W3D_Float* fp;
+	W3D_Double* dp;
+	fp = NULL;
+	dp = NULL;
 	switch (context->VPMode) {
 	case W3D_VERTEX_F_F_F:
 		fp = (W3D_Float*) (context->VertexPointer + i * context->VPStride);
@@ -91,7 +93,7 @@ inline void drawV(W3D_Context* context, unsigned int i) {
 
 ULONG W3D_DrawArray(__REGA0(W3D_Context* context), __REGD0(ULONG primitive), __REGD1(ULONG base), __REGD2(ULONG count)) {
 	unsigned int i;
-	LOG
+	LOG;
 	if (context->state & W3D_TEXMAPPING && context->CurrentTex[0]) bindTexture(context->CurrentTex[0]);
 	_glBegin(primitives[primitive]);
 	for (i = base; i < base + count; ++i) {
@@ -102,12 +104,16 @@ ULONG W3D_DrawArray(__REGA0(W3D_Context* context), __REGD0(ULONG primitive), __R
 	_glEnd();
 	return W3D_SUCCESS;
 }
+
 ULONG W3D_DrawElements(__REGA0(W3D_Context* context), __REGD0(ULONG primitive), __REGD1(ULONG type), __REGD2(ULONG count), __REGA1(void *indices)) {
-	UBYTE* bp = NULL;
-	UWORD* wp = NULL;
-	ULONG* lp = NULL;
+	UBYTE* bp;
+	UWORD* wp;
+	ULONG* lp;
 	unsigned int i;
-	LOG
+	LOG;
+	bp = NULL;
+	wp = NULL;
+	lp = NULL;
 	if (context->state & W3D_TEXMAPPING && context->CurrentTex[0]) bindTexture(context->CurrentTex[0]);
 	switch (type) {
 	case W3D_INDEX_UBYTE:
@@ -147,6 +153,6 @@ ULONG W3D_DrawElements(__REGA0(W3D_Context* context), __REGD0(ULONG primitive), 
 GLenum face[] = { GL_CW, GL_CCW };
 
 void W3D_SetFrontFace(__REGA0(W3D_Context* context), __REGD0(ULONG direction)) {
-	LOG
+	LOG;
 	_glFrontFace(face[direction]);
 }

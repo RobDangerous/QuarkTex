@@ -110,7 +110,8 @@ public:
 	}
 	void fpuasm(ofstream& out) {
 		out << std::endl << "asm volatile (\"" << std::endl;
-		out << "move.l a5,_a5" << std::endl;
+		//out << "move.l a5,_a5" << std::endl;
+		out << "movem.l a2-a6/d2-d7,-(a7)" << std::endl;
 		int d = 1;
 		int a = 1;
 		int fp = 0;
@@ -190,7 +191,7 @@ public:
 			glc << "EXEC(";
 			functionName.print(glc);
 			glc << ");" << std::endl;
-			if (argumentList.hasDoubles()) glc << "asm volatile (\"move.l _a5,a5\");" << std::endl;
+			if (argumentList.hasDoubles()) glc << "asm volatile (\"movem.l (a7)+,a2-a6/d2-d7\");" << std::endl;
 			glc << "}" << std::endl;
 		}
 		else {
@@ -199,7 +200,7 @@ public:
 			glc << "EXEC_RET(";
 			functionName.print(glc);
 			glc << ");" << std::endl;
-			if (argumentList.hasDoubles()) glc << "asm volatile (\"move.l _a5,a5\");" << std::endl;
+			if (argumentList.hasDoubles()) glc << "asm volatile (\"movem.l (a7)+,a2-a6/d2-d7\");" << std::endl;
 			glc << "return ret; }" << std::endl;
 		}
 	}

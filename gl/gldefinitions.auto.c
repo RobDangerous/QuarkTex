@@ -26,12 +26,12 @@ GLvoid _glClearColor(GLclampf red __asm("d1"), GLclampf green __asm("d2"), GLcla
 }
 GLvoid _glClearDepth(GLclampd depth __asm("fp0")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 move.l _fp0,d1\nmove.l _fp0,d2
 ");
 EXEC(ClearDepth);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glClearIndex(GLfloat c __asm("d1")) {EXEC(ClearIndex);
 }
@@ -45,7 +45,7 @@ GLvoid _glColor3bv(GLbyte* v __asm("d1")) {EXEC(Color3bv);
 }
 GLvoid _glColor3d(GLdouble red __asm("fp0"), GLdouble green __asm("fp1"), GLdouble blue __asm("fp2")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 fmove.d fp2,_fp2
@@ -54,7 +54,7 @@ move.l _fp1,d3\nmove.l _fp1,d4
 move.l _fp2,d5\nmove.l _fp2,d6
 ");
 EXEC(Color3d);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glColor3dv(GLdouble* v __asm("d1")) {EXEC(Color3dv);
 }
@@ -88,7 +88,7 @@ GLvoid _glColor4bv(GLbyte* v __asm("d1")) {EXEC(Color4bv);
 }
 GLvoid _glColor4d(GLdouble red __asm("fp0"), GLdouble green __asm("fp1"), GLdouble blue __asm("fp2"), GLdouble alpha __asm("fp3")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 fmove.d fp2,_fp2
@@ -99,7 +99,7 @@ move.l _fp2,d5\nmove.l _fp2,d6
 move.l _fp3,d7\nmove.l _fp3,a1
 ");
 EXEC(Color4d);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glColor4dv(GLdouble* v __asm("d1")) {EXEC(Color4dv);
 }
@@ -155,14 +155,14 @@ GLvoid _glDepthMask(GLboolean flag __asm("d1")) {EXEC(DepthMask);
 }
 GLvoid _glDepthRange(GLclampd zNear __asm("fp0"), GLclampd zFar __asm("fp1")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 move.l _fp0,d1\nmove.l _fp0,d2
 move.l _fp1,d3\nmove.l _fp1,d4
 ");
 EXEC(DepthRange);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glDisable(GLenum cap __asm("d1")) {EXEC(Disable);
 }
@@ -192,12 +192,12 @@ GLvoid _glEndList(void) {EXEC(EndList);
 }
 GLvoid _glEvalCoord1d(GLdouble u __asm("fp0")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 move.l _fp0,d1\nmove.l _fp0,d2
 ");
 EXEC(EvalCoord1d);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glEvalCoord1dv(GLdouble* u __asm("d1")) {EXEC(EvalCoord1dv);
 }
@@ -207,14 +207,14 @@ GLvoid _glEvalCoord1fv(GLfloat* u __asm("d1")) {EXEC(EvalCoord1fv);
 }
 GLvoid _glEvalCoord2d(GLdouble u __asm("fp0"), GLdouble v __asm("fp1")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 move.l _fp0,d1\nmove.l _fp0,d2
 move.l _fp1,d3\nmove.l _fp1,d4
 ");
 EXEC(EvalCoord2d);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glEvalCoord2dv(GLdouble* u __asm("d1")) {EXEC(EvalCoord2dv);
 }
@@ -248,7 +248,7 @@ GLvoid _glFrontFace(GLenum mode __asm("d1")) {EXEC(FrontFace);
 }
 GLvoid _glFrustum(GLdouble left __asm("fp0"), GLdouble right __asm("fp1"), GLdouble bottom __asm("fp2"), GLdouble top __asm("fp3"), GLdouble zNear __asm("fp4"), GLdouble zFar __asm("fp5")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 fmove.d fp2,_fp2
@@ -263,7 +263,7 @@ move.l _fp4,a2\nmove.l _fp4,a3
 move.l _fp5,a4\nmove.l _fp5,a5
 ");
 EXEC(Frustum);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLuint _glGenLists(GLsizei range __asm("d1")) {EXEC_RET(GenLists);
 return ret; }
@@ -335,12 +335,12 @@ GLvoid _glIndexPointer(GLenum type __asm("d1"), GLsizei stride __asm("d2"), GLvo
 }
 GLvoid _glIndexd(GLdouble c __asm("fp0")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 move.l _fp0,d1\nmove.l _fp0,d2
 ");
 EXEC(Indexd);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glIndexdv(GLdouble* c __asm("d1")) {EXEC(Indexdv);
 }
@@ -404,14 +404,14 @@ GLvoid _glLogicOp(GLenum opcode __asm("d1")) {EXEC(LogicOp);
 }
 GLvoid _glMap1d(GLenum target __asm("d1"), GLdouble u1 __asm("fp0"), GLdouble u2 __asm("fp1"), GLint stride __asm("d6"), GLint order __asm("d7"), GLdouble* points __asm("a1")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 move.l _fp0,d2\nmove.l _fp0,d3
 move.l _fp1,d4\nmove.l _fp1,d5
 ");
 EXEC(Map1d);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glMap1f(GLenum target __asm("d1"), GLfloat u1 __asm("d2"), GLfloat u2 __asm("d3"), GLint stride __asm("d4"), GLint order __asm("d5"), GLfloat* points __asm("d6")) {EXEC(Map1f);
 }
@@ -421,20 +421,20 @@ GLvoid _glMap2f(GLenum target __asm("d1"), GLfloat u1 __asm("d2"), GLfloat u2 __
 }
 GLvoid _glMapGrid1d(GLint un __asm("d1"), GLdouble u1 __asm("fp0"), GLdouble u2 __asm("fp1")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 move.l _fp0,d2\nmove.l _fp0,d3
 move.l _fp1,d4\nmove.l _fp1,d5
 ");
 EXEC(MapGrid1d);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glMapGrid1f(GLint un __asm("d1"), GLfloat u1 __asm("d2"), GLfloat u2 __asm("d3")) {EXEC(MapGrid1f);
 }
 GLvoid _glMapGrid2d(GLint un __asm("d1"), GLdouble u1 __asm("fp0"), GLdouble u2 __asm("fp1"), GLint vn __asm("d6"), GLdouble v1 __asm("fp2"), GLdouble v2 __asm("fp3")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 fmove.d fp2,_fp2
@@ -445,7 +445,7 @@ move.l _fp2,d7\nmove.l _fp2,a1
 move.l _fp3,a2\nmove.l _fp3,a3
 ");
 EXEC(MapGrid2d);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glMapGrid2f(GLint un __asm("d1"), GLfloat u1 __asm("d2"), GLfloat u2 __asm("d3"), GLint vn __asm("d4"), GLfloat v1 __asm("d5"), GLfloat v2 __asm("d6")) {EXEC(MapGrid2f);
 }
@@ -471,7 +471,7 @@ GLvoid _glNormal3bv(GLbyte* v __asm("d1")) {EXEC(Normal3bv);
 }
 GLvoid _glNormal3d(GLdouble nx __asm("fp0"), GLdouble ny __asm("fp1"), GLdouble nz __asm("fp2")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 fmove.d fp2,_fp2
@@ -480,7 +480,7 @@ move.l _fp1,d3\nmove.l _fp1,d4
 move.l _fp2,d5\nmove.l _fp2,d6
 ");
 EXEC(Normal3d);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glNormal3dv(GLdouble* v __asm("d1")) {EXEC(Normal3dv);
 }
@@ -500,7 +500,7 @@ GLvoid _glNormalPointer(GLenum type __asm("d1"), GLsizei stride __asm("d2"), GLv
 }
 GLvoid _glOrtho(GLdouble left __asm("fp0"), GLdouble right __asm("fp1"), GLdouble bottom __asm("fp2"), GLdouble top __asm("fp3"), GLdouble zNear __asm("fp4"), GLdouble zFar __asm("fp5")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 fmove.d fp2,_fp2
@@ -515,7 +515,7 @@ move.l _fp4,a2\nmove.l _fp4,a3
 move.l _fp5,a4\nmove.l _fp5,a5
 ");
 EXEC(Ortho);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glPassThrough(GLfloat token __asm("d1")) {EXEC(PassThrough);
 }
@@ -563,14 +563,14 @@ GLvoid _glPushName(GLuint name __asm("d1")) {EXEC(PushName);
 }
 GLvoid _glRasterPos2d(GLdouble x __asm("fp0"), GLdouble y __asm("fp1")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 move.l _fp0,d1\nmove.l _fp0,d2
 move.l _fp1,d3\nmove.l _fp1,d4
 ");
 EXEC(RasterPos2d);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glRasterPos2dv(GLdouble* v __asm("d1")) {EXEC(RasterPos2dv);
 }
@@ -588,7 +588,7 @@ GLvoid _glRasterPos2sv(GLshort* v __asm("d1")) {EXEC(RasterPos2sv);
 }
 GLvoid _glRasterPos3d(GLdouble x __asm("fp0"), GLdouble y __asm("fp1"), GLdouble z __asm("fp2")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 fmove.d fp2,_fp2
@@ -597,7 +597,7 @@ move.l _fp1,d3\nmove.l _fp1,d4
 move.l _fp2,d5\nmove.l _fp2,d6
 ");
 EXEC(RasterPos3d);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glRasterPos3dv(GLdouble* v __asm("d1")) {EXEC(RasterPos3dv);
 }
@@ -615,7 +615,7 @@ GLvoid _glRasterPos3sv(GLshort* v __asm("d1")) {EXEC(RasterPos3sv);
 }
 GLvoid _glRasterPos4d(GLdouble x __asm("fp0"), GLdouble y __asm("fp1"), GLdouble z __asm("fp2"), GLdouble w __asm("fp3")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 fmove.d fp2,_fp2
@@ -626,7 +626,7 @@ move.l _fp2,d5\nmove.l _fp2,d6
 move.l _fp3,d7\nmove.l _fp3,a1
 ");
 EXEC(RasterPos4d);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glRasterPos4dv(GLdouble* v __asm("d1")) {EXEC(RasterPos4dv);
 }
@@ -648,7 +648,7 @@ GLvoid _glReadPixels(GLint x __asm("d1"), GLint y __asm("d2"), GLsizei width __a
 }
 GLvoid _glRectd(GLdouble x1 __asm("fp0"), GLdouble y1 __asm("fp1"), GLdouble x2 __asm("fp2"), GLdouble y2 __asm("fp3")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 fmove.d fp2,_fp2
@@ -659,7 +659,7 @@ move.l _fp2,d5\nmove.l _fp2,d6
 move.l _fp3,d7\nmove.l _fp3,a1
 ");
 EXEC(Rectd);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glRectdv(GLdouble* v1 __asm("d1"), GLdouble* v2 __asm("d2")) {EXEC(Rectdv);
 }
@@ -679,7 +679,7 @@ GLint _glRenderMode(GLenum mode __asm("d1")) {EXEC_RET(RenderMode);
 return ret; }
 GLvoid _glRotated(GLdouble ane __asm("fp0"), GLdouble x __asm("fp1"), GLdouble y __asm("fp2"), GLdouble z __asm("fp3")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 fmove.d fp2,_fp2
@@ -690,13 +690,13 @@ move.l _fp2,d5\nmove.l _fp2,d6
 move.l _fp3,d7\nmove.l _fp3,a1
 ");
 EXEC(Rotated);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glRotatef(GLfloat ane __asm("d1"), GLfloat x __asm("d2"), GLfloat y __asm("d3"), GLfloat z __asm("d4")) {EXEC(Rotatef);
 }
 GLvoid _glScaled(GLdouble x __asm("fp0"), GLdouble y __asm("fp1"), GLdouble z __asm("fp2")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 fmove.d fp2,_fp2
@@ -705,7 +705,7 @@ move.l _fp1,d3\nmove.l _fp1,d4
 move.l _fp2,d5\nmove.l _fp2,d6
 ");
 EXEC(Scaled);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glScalef(GLfloat x __asm("d1"), GLfloat y __asm("d2"), GLfloat z __asm("d3")) {EXEC(Scalef);
 }
@@ -723,12 +723,12 @@ GLvoid _glStencilOp(GLenum fail __asm("d1"), GLenum zfail __asm("d2"), GLenum zp
 }
 GLvoid _glTexCoord1d(GLdouble s __asm("fp0")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 move.l _fp0,d1\nmove.l _fp0,d2
 ");
 EXEC(TexCoord1d);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glTexCoord1dv(GLdouble* v __asm("d1")) {EXEC(TexCoord1dv);
 }
@@ -746,14 +746,14 @@ GLvoid _glTexCoord1sv(GLshort* v __asm("d1")) {EXEC(TexCoord1sv);
 }
 GLvoid _glTexCoord2d(GLdouble s __asm("fp0"), GLdouble t __asm("fp1")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 move.l _fp0,d1\nmove.l _fp0,d2
 move.l _fp1,d3\nmove.l _fp1,d4
 ");
 EXEC(TexCoord2d);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glTexCoord2dv(GLdouble* v __asm("d1")) {EXEC(TexCoord2dv);
 }
@@ -771,7 +771,7 @@ GLvoid _glTexCoord2sv(GLshort* v __asm("d1")) {EXEC(TexCoord2sv);
 }
 GLvoid _glTexCoord3d(GLdouble s __asm("fp0"), GLdouble t __asm("fp1"), GLdouble r __asm("fp2")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 fmove.d fp2,_fp2
@@ -780,7 +780,7 @@ move.l _fp1,d3\nmove.l _fp1,d4
 move.l _fp2,d5\nmove.l _fp2,d6
 ");
 EXEC(TexCoord3d);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glTexCoord3dv(GLdouble* v __asm("d1")) {EXEC(TexCoord3dv);
 }
@@ -798,7 +798,7 @@ GLvoid _glTexCoord3sv(GLshort* v __asm("d1")) {EXEC(TexCoord3sv);
 }
 GLvoid _glTexCoord4d(GLdouble s __asm("fp0"), GLdouble t __asm("fp1"), GLdouble r __asm("fp2"), GLdouble q __asm("fp3")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 fmove.d fp2,_fp2
@@ -809,7 +809,7 @@ move.l _fp2,d5\nmove.l _fp2,d6
 move.l _fp3,d7\nmove.l _fp3,a1
 ");
 EXEC(TexCoord4d);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glTexCoord4dv(GLdouble* v __asm("d1")) {EXEC(TexCoord4dv);
 }
@@ -837,12 +837,12 @@ GLvoid _glTexEnviv(GLenum target __asm("d1"), GLenum pname __asm("d2"), GLint* p
 }
 GLvoid _glTexGend(GLenum coord __asm("d1"), GLenum pname __asm("d2"), GLdouble param __asm("fp0")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 move.l _fp0,d3\nmove.l _fp0,d4
 ");
 EXEC(TexGend);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glTexGendv(GLenum coord __asm("d1"), GLenum pname __asm("d2"), GLdouble* params __asm("d3")) {EXEC(TexGendv);
 }
@@ -872,7 +872,7 @@ GLvoid _glTexSubImage2D(GLenum target __asm("d1"), GLint level __asm("d2"), GLin
 }
 GLvoid _glTranslated(GLdouble x __asm("fp0"), GLdouble y __asm("fp1"), GLdouble z __asm("fp2")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 fmove.d fp2,_fp2
@@ -881,20 +881,20 @@ move.l _fp1,d3\nmove.l _fp1,d4
 move.l _fp2,d5\nmove.l _fp2,d6
 ");
 EXEC(Translated);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glTranslatef(GLfloat x __asm("d1"), GLfloat y __asm("d2"), GLfloat z __asm("d3")) {EXEC(Translatef);
 }
 GLvoid _glVertex2d(GLdouble x __asm("fp0"), GLdouble y __asm("fp1")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 move.l _fp0,d1\nmove.l _fp0,d2
 move.l _fp1,d3\nmove.l _fp1,d4
 ");
 EXEC(Vertex2d);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glVertex2dv(GLdouble* v __asm("d1")) {EXEC(Vertex2dv);
 }
@@ -912,7 +912,7 @@ GLvoid _glVertex2sv(GLshort* v __asm("d1")) {EXEC(Vertex2sv);
 }
 GLvoid _glVertex3d(GLdouble x __asm("fp0"), GLdouble y __asm("fp1"), GLdouble z __asm("fp2")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 fmove.d fp2,_fp2
@@ -921,7 +921,7 @@ move.l _fp1,d3\nmove.l _fp1,d4
 move.l _fp2,d5\nmove.l _fp2,d6
 ");
 EXEC(Vertex3d);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glVertex3dv(GLdouble* v __asm("d1")) {EXEC(Vertex3dv);
 }
@@ -939,7 +939,7 @@ GLvoid _glVertex3sv(GLshort* v __asm("d1")) {EXEC(Vertex3sv);
 }
 GLvoid _glVertex4d(GLdouble x __asm("fp0"), GLdouble y __asm("fp1"), GLdouble z __asm("fp2"), GLdouble w __asm("fp3")) {
 asm volatile ("
-move.l a5,_a5
+movem.l a2-a6/d2-d7,-(a7)
 fmove.d fp0,_fp0
 fmove.d fp1,_fp1
 fmove.d fp2,_fp2
@@ -950,7 +950,7 @@ move.l _fp2,d5\nmove.l _fp2,d6
 move.l _fp3,d7\nmove.l _fp3,a1
 ");
 EXEC(Vertex4d);
-asm volatile ("move.l _a5,a5");
+asm volatile ("movem.l (a7)+,a2-a6/d2-d7");
 }
 GLvoid _glVertex4dv(GLdouble* v __asm("d1")) {EXEC(Vertex4dv);
 }

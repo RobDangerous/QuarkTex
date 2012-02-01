@@ -1,46 +1,46 @@
 #include "../gl/gl.h"
 
-void glClearIndex(GLfloat index __asm("fp0")) { LOG; PUSHREGS;; PUSHREGS; _glClearIndex(index); POPREGS; }
-void glClearColor(GLclampf red __asm("fp0"), GLclampf green __asm("fp1"), GLclampf blue __asm("fp2"), GLclampf alpha __asm("fp3")) { LOG; PUSHREGS;; PUSHREGS; _glClearColor(red, green, blue, alpha); POPREGS; }
-void glClear(GLbitfield mask __asm("d0")) { LOG; PUSHREGS;; PUSHREGS; _glClear(mask); POPREGS; }
-void glIndexMask(GLuint mask __asm("d0")) { LOG; PUSHREGS;; PUSHREGS; _glIndexMask(mask); POPREGS; }
-void glColorMask(GLboolean red __asm("d0"), GLboolean green __asm("d1"), GLboolean blue __asm("d2"), GLboolean alpha __asm("d3")) { LOG; PUSHREGS;; PUSHREGS; _glColorMask(red, green, blue, alpha); POPREGS; }
-void glAlphaFunc(GLenum func __asm("d0"), GLclampf ref __asm("fp0")) { LOG; PUSHREGS;; PUSHREGS; _glAlphaFunc(func, ref); POPREGS; }
-void glBlendFunc(GLenum sfactor __asm("d0"), GLenum dfactor __asm("d1")) { LOG; PUSHREGS;; PUSHREGS; _glBlendFunc(sfactor, dfactor); POPREGS; }
-void glLogicOp(GLenum opcode __asm("d0")) { LOG; PUSHREGS;; PUSHREGS; _glLogicOp(opcode); POPREGS; }
-void glCullFace(GLenum mode __asm("d0")) { LOG; PUSHREGS;; PUSHREGS; _glCullFace(mode); POPREGS; }
-void glFrontFace(GLenum mode __asm("d0")) { LOG; PUSHREGS;; PUSHREGS; _glFrontFace(mode); POPREGS; }
-void glPointSize(GLfloat size __asm("fp0")) { LOG; PUSHREGS;; PUSHREGS; _glPointSize(size); POPREGS; }
-void glLineWidth(GLfloat width __asm("fp0")) { LOG; PUSHREGS;; PUSHREGS; _glLineWidth(width); POPREGS; }
-void glLineStipple(GLint factor __asm("d0"), GLushort pattern __asm("d1")) { LOG; PUSHREGS;; PUSHREGS; _glLineStipple(factor, pattern); POPREGS; }
-void glPolygonMode(GLenum face __asm("d0"), GLenum mode __asm("d1")) { LOG; PUSHREGS;; PUSHREGS; _glPolygonMode(face, mode); POPREGS; }
-void glPolygonOffset(GLfloat factor __asm("fp0"), GLfloat units __asm("fp1")) { LOG; PUSHREGS;; PUSHREGS; _glPolygonOffset(factor, units); POPREGS; }
-void glPolygonStipple(GLubyte *mask __asm("a0")) { LOG; PUSHREGS;; PUSHREGS; _glPolygonStipple(memoffset + (long) mask); POPREGS; }
-void glGetPolygonStipple(GLubyte *mask __asm("a0")) { LOG; PUSHREGS;; PUSHREGS; _glGetPolygonStipple(memoffset + (long) mask); POPREGS; }
-void glEdgeFlag(GLboolean flag __asm("d0")) { LOG; PUSHREGS;; PUSHREGS; _glEdgeFlag(flag); POPREGS; }
-void glEdgeFlagv(GLboolean *flag __asm("a0")) { LOG; PUSHREGS;; PUSHREGS; _glEdgeFlagv(memoffset + (long) flag); POPREGS; }
-void glScissor(GLint x __asm("d0"), GLint y __asm("d1"), GLsizei width __asm("d2"), GLsizei height __asm("d3")) { LOG; PUSHREGS; _glScissor(x, y, width, height); POPREGS; }
+void glClearIndex(GLfloat index __asm("fp0")) { LOG; _glClearIndex(index); }
+void glClearColor(GLclampf red __asm("fp0"), GLclampf green __asm("fp1"), GLclampf blue __asm("fp2"), GLclampf alpha __asm("fp3")) { LOG; _glClearColor(red, green, blue, alpha); }
+void glClear(GLbitfield mask __asm("d0")) { LOG; _glClear(mask); }
+void glIndexMask(GLuint mask __asm("d0")) { LOG; _glIndexMask(mask); }
+void glColorMask(GLboolean red __asm("d0"), GLboolean green __asm("d1"), GLboolean blue __asm("d2"), GLboolean alpha __asm("d3")) { LOG; _glColorMask(red, green, blue, alpha); }
+void glAlphaFunc(GLenum func __asm("d0"), GLclampf ref __asm("fp0")) { LOG; _glAlphaFunc(func, ref); }
+void glBlendFunc(GLenum sfactor __asm("d0"), GLenum dfactor __asm("d1")) { LOG; _glBlendFunc(sfactor, dfactor); }
+void glLogicOp(GLenum opcode __asm("d0")) { LOG; _glLogicOp(opcode); }
+void glCullFace(GLenum mode __asm("d0")) { LOG; _glCullFace(mode); }
+void glFrontFace(GLenum mode __asm("d0")) { LOG; _glFrontFace(mode); }
+void glPointSize(GLfloat size __asm("fp0")) { LOG; _glPointSize(size); }
+void glLineWidth(GLfloat width __asm("fp0")) { LOG; _glLineWidth(width); }
+void glLineStipple(GLint factor __asm("d0"), GLushort pattern __asm("d1")) { LOG; _glLineStipple(factor, pattern); }
+void glPolygonMode(GLenum face __asm("d0"), GLenum mode __asm("d1")) { LOG; _glPolygonMode(face, mode); }
+void glPolygonOffset(GLfloat factor __asm("fp0"), GLfloat units __asm("fp1")) { LOG; _glPolygonOffset(factor, units); }
+void glPolygonStipple(GLubyte *mask __asm("a0")) { LOG; _glPolygonStipple(memoffset + (long) mask); }
+void glGetPolygonStipple(GLubyte *mask __asm("a0")) { LOG; _glGetPolygonStipple(memoffset + (long) mask); }
+void glEdgeFlag(GLboolean flag __asm("d0")) { LOG; _glEdgeFlag(flag); }
+void glEdgeFlagv(GLboolean *flag __asm("a0")) { LOG; _glEdgeFlagv(memoffset + (long) flag); }
+void glScissor(GLint x __asm("d0"), GLint y __asm("d1"), GLsizei width __asm("d2"), GLsizei height __asm("d3")) { LOG; _glScissor(x, y, width, height); }
 void glClipPlane(GLenum plane __asm("d0"), GLdouble *equation __asm("a0")) {
-	LOG; PUSHREGS;
+	LOG;
 	SWAP64(equation, 4);
 	_glClipPlane(plane, memoffset + (long) equation);
 	SWAP64(equation, 4);
-POPREGS; }
+}
 void glGetClipPlane(GLenum plane __asm("d0"), GLdouble *equation __asm("a0")) {
-	LOG; PUSHREGS;
+	LOG;
 	_glGetClipPlane(plane, memoffset + (long) equation);
 	SWAP64(equation, 4);
-POPREGS; }
-void glDrawBuffer(GLenum mode __asm("d0")) { LOG; PUSHREGS; _glDrawBuffer(mode); POPREGS; }
-void glReadBuffer(GLenum mode __asm("d0")) { LOG; PUSHREGS; _glReadBuffer(mode); POPREGS; }
-void glEnable(GLenum cap __asm("d0")) { LOG; PUSHREGS; _glEnable(cap); POPREGS; }
-void glDisable(GLenum cap __asm("d0")) { LOG; PUSHREGS; _glDisable(cap); POPREGS; }
-GLboolean glIsEnabled(GLenum cap __asm("d0")) { LOG; PUSHREGS; return _glIsEnabled(cap); POPREGS; }
-void glEnableClientState(GLenum cap __asm("d0")) { LOG; PUSHREGS; _glEnableClientState(cap); POPREGS; }
-void glDisableClientState(GLenum cap __asm("d0")) { LOG; PUSHREGS; _glDisableClientState(cap); POPREGS; }
-void glGetBooleanv(GLenum pname __asm("d0"), GLboolean *params __asm("a0")) { LOG; PUSHREGS; _glGetBooleanv(pname, memoffset + (long) params); POPREGS; }
+}
+void glDrawBuffer(GLenum mode __asm("d0")) { LOG; _glDrawBuffer(mode); }
+void glReadBuffer(GLenum mode __asm("d0")) { LOG; _glReadBuffer(mode); }
+void glEnable(GLenum cap __asm("d0")) { LOG; _glEnable(cap); }
+void glDisable(GLenum cap __asm("d0")) { LOG; _glDisable(cap); }
+GLboolean glIsEnabled(GLenum cap __asm("d0")) { LOG; return _glIsEnabled(cap); }
+void glEnableClientState(GLenum cap __asm("d0")) { LOG; _glEnableClientState(cap); }
+void glDisableClientState(GLenum cap __asm("d0")) { LOG; _glDisableClientState(cap); }
+void glGetBooleanv(GLenum pname __asm("d0"), GLboolean *params __asm("a0")) { LOG; _glGetBooleanv(pname, memoffset + (long) params); }
 void glGetDoublev(GLenum pname __asm("d0"), GLdouble *params __asm("a0")) {
-	LOG; PUSHREGS;
+	LOG;
 	_glGetDoublev(pname, memoffset + (long) params);
 	switch (pname) {
 	case GL_MODELVIEW_MATRIX:
@@ -80,9 +80,9 @@ void glGetDoublev(GLenum pname __asm("d0"), GLdouble *params __asm("a0")) {
 		SWAP64(params, 1);
 		break;
 	}
-POPREGS; }
+}
 void glGetFloatv(GLenum pname __asm("d0"), GLfloat *params __asm("a0")) {
-	LOG; PUSHREGS;
+	LOG;
 	_glGetFloatv(pname, memoffset + (long) params);
 	switch (pname) {
 	case GL_MODELVIEW_MATRIX:
@@ -122,9 +122,9 @@ void glGetFloatv(GLenum pname __asm("d0"), GLfloat *params __asm("a0")) {
 		SWAP32(params, 1);
 		break;
 	}
-POPREGS; }
+}
 void glGetIntegerv(GLenum pname __asm("d0"), GLint *params __asm("a0")) {
-	LOG; PUSHREGS;
+	LOG;
 	_glGetIntegerv(pname, memoffset + (long) params);
 	switch (pname) {
 	case GL_MODELVIEW_MATRIX:
@@ -164,15 +164,15 @@ void glGetIntegerv(GLenum pname __asm("d0"), GLint *params __asm("a0")) {
 		SWAP32(params, 1);
 		break;
 	}
-POPREGS; }
-void glPushAttrib(GLbitfield mask __asm("d0")) { LOG; PUSHREGS; _glPushAttrib(mask); POPREGS; }
-void glPopAttrib(void) { LOG; PUSHREGS; _glPopAttrib(); POPREGS; }
-void glPushClientAttrib( GLbitfield mask __asm("d0")) { LOG; PUSHREGS; _glPushClientAttrib(mask); POPREGS; }
-void glPopClientAttrib(void) { LOG; PUSHREGS; _glPopClientAttrib(); POPREGS; }
-void glRenderMode(GLenum mode __asm("d0")) { LOG; PUSHREGS; _glRenderMode(mode); POPREGS; }
-GLenum glGetError(void) { LOG; PUSHREGS; return _glGetError(); POPREGS; }
+}
+void glPushAttrib(GLbitfield mask __asm("d0")) { LOG; _glPushAttrib(mask); }
+void glPopAttrib(void) { LOG; _glPopAttrib(); }
+void glPushClientAttrib( GLbitfield mask __asm("d0")) { LOG; _glPushClientAttrib(mask); }
+void glPopClientAttrib(void) { LOG; _glPopClientAttrib(); }
+void glRenderMode(GLenum mode __asm("d0")) { LOG; _glRenderMode(mode); }
+GLenum glGetError(void) { LOG; return _glGetError(); }
 GLubyte * glGetString(GLenum name __asm("d0")) {
-	LOG; PUSHREGS;
+	LOG;
 	switch (name) {
 	case GL_VENDOR:
 		return "Robert Konrad";
@@ -184,7 +184,7 @@ GLubyte * glGetString(GLenum name __asm("d0")) {
 		return "";
 	}
 	return "unknown name";
-POPREGS; }
-void glFinish(void) { LOG; PUSHREGS; _glFinish(); POPREGS; }
-void glFlush(void) { LOG; PUSHREGS; _glFlush(); POPREGS; }
-void glHint(GLenum target __asm("d0"), GLenum mode __asm("d1")) { LOG; PUSHREGS; _glHint(target, mode); POPREGS; }
+}
+void glFinish(void) { LOG; _glFinish(); }
+void glFlush(void) { LOG; _glFlush(); }
+void glHint(GLenum target __asm("d0"), GLenum mode __asm("d1")) { LOG; _glHint(target, mode); }
