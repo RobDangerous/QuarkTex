@@ -1,0 +1,350 @@
+Storm Shell Project (0018)
+Settings (Start)
+C/C++ Environment
+"StormC:Include"
+0
+Includepath (End)
+0 "" 80
+1 "objects"
+0 0 "makelog.txt"
+""
+0
+0 0
+0
+0 0
+C/C++ Preprozessor
+0 "NDEBUG" ""
+0
+Defines (End)
+1 1 1
+0 0
+C/C++ Options
+0 0 0 0 0 0 0 0 0 0 0 1 0 0 0
+0 0 0
+0
+0 1 0
+C/C++ Optimizer
+6
+C/C++ Warnings
+1 1 1 1 1 1 0 1
+0 0
+GCC Options (1)
+Defines (End)
+1 0 0 1 0
+0 0 0 0 0 1 0
+0 0 0 0 1
+1 0 1 0 1 0 0
+4 1 0 0
+0 ""
+0 0 1 0
+1 0 0 1 0 1 0 1 0 1
+1 1 0 1 0 1
+0 1 1 1 1 0 0
+1 0 0 0 0
+Assembler
+0 ""
+0 "CON://640/200/Storm Assembler/AUTO/WAIT/SCREEN StormScreen"
+0 0
+0 1 60 0 1 0 0 20 0
+Sets (End)
+0 3 1 0 0 2 1 0 0
+1 1 1 1 0 0 0 0 0
+1 0
+0 0 0 0 0
+Linker
+2 0 "StormC:BIN/library_startup.o" 0 0 4 2 1 0 0
+"StormC:Lib" 0 "StormC:lib" 0 0 0
+0 "_WizardSurface"
+0 0 50 0 50 0 50 0 0
+0 0 0 0 0 0 0 0
+Run
+30 "" "" "" 0
+""
+
+1 "CON://640/200/Console/AUTO/WAIT" "RAM:Output" "RAM:Input"
+1 0
+0 0 0 "" ""
+Settings (End)
+Storm Shell Project (Custom Sections End)
+Section
+1 1 100
+0 1 1 0
+4
+File
+1 "1.1.c"
+"1.1.c"
+"/gl/gl.h"
+"/gl/gldefines.h"
+"/gl/gldeclarations.auto.h"
+Storm Shell Project (Dependencies)
+"objects/1.1.o" "objects/1.1.debug"
+""
+1 1
+File
+1 "1.2.c"
+"1.2.c"
+"/gl/gl.h"
+"/gl/gldefines.h"
+"/gl/gldeclarations.auto.h"
+Storm Shell Project (Dependencies)
+"objects/1.2.o" "objects/1.2.debug"
+""
+1 1
+File
+1 "AccumulationBuffer.c"
+"AccumulationBuffer.c"
+"/gl/gl.h"
+"/gl/gldefines.h"
+"/gl/gldeclarations.auto.h"
+Storm Shell Project (Dependencies)
+"objects/AccumulationBuffer.o" "objects/AccumulationBuffer.debug"
+""
+1 1
+File
+1 "DepthBuffer.c"
+"DepthBuffer.c"
+"/gl/gl.h"
+"/gl/gldefines.h"
+"/gl/gldeclarations.auto.h"
+Storm Shell Project (Dependencies)
+"objects/DepthBuffer.o" "objects/DepthBuffer.debug"
+""
+1 1
+File
+1 "DisplayLists.c"
+"DisplayLists.c"
+"/gl/gl.h"
+"/gl/gldefines.h"
+"/gl/gldeclarations.auto.h"
+Storm Shell Project (Dependencies)
+"objects/DisplayLists.o" "objects/DisplayLists.debug"
+""
+1 1
+File
+1 "DrawingFunctions.c"
+"DrawingFunctions.c"
+"/gl/gl.h"
+"/gl/gldefines.h"
+"/gl/gldeclarations.auto.h"
+Storm Shell Project (Dependencies)
+"objects/DrawingFunctions.o" "objects/DrawingFunctions.debug"
+""
+1 1
+File
+1 "Evaluators.c"
+"Evaluators.c"
+"/gl/gl.h"
+"/gl/gldefines.h"
+"/gl/gldeclarations.auto.h"
+Storm Shell Project (Dependencies)
+"objects/Evaluators.o" "objects/Evaluators.debug"
+""
+1 1
+File
+1 "EXT.c"
+"EXT.c"
+"/gl/gl.h"
+"/gl/gldefines.h"
+"/gl/gldeclarations.auto.h"
+Storm Shell Project (Dependencies)
+"objects/EXT.o" "objects/EXT.debug"
+""
+1 1
+File
+1 "fog.c"
+"fog.c"
+"/gl/gl.h"
+"/gl/gldefines.h"
+"/gl/gldeclarations.auto.h"
+Storm Shell Project (Dependencies)
+"objects/fog.o" "objects/fog.debug"
+""
+1 1
+File
+1 "Lighting.c"
+"Lighting.c"
+"/gl/gl.h"
+"/gl/gldefines.h"
+"/gl/gldeclarations.auto.h"
+Storm Shell Project (Dependencies)
+"objects/Lighting.o" "objects/Lighting.debug"
+""
+1 1
+File
+1 "MESA.c"
+"MESA.c"
+"/gl/gl.h"
+"/gl/gldefines.h"
+"/gl/gldeclarations.auto.h"
+Storm Shell Project (Dependencies)
+"objects/MESA.o" "objects/MESA.debug"
+""
+1 1
+File
+1 "Miscellaneous.c"
+"Miscellaneous.c"
+"/gl/gl.h"
+"/gl/gldefines.h"
+"/gl/gldeclarations.auto.h"
+Storm Shell Project (Dependencies)
+"objects/Miscellaneous.o" "objects/Miscellaneous.debug"
+""
+1 1
+File
+1 "Rasterfunctions.c"
+"Rasterfunctions.c"
+"/gl/gl.h"
+"/gl/gldefines.h"
+"/gl/gldeclarations.auto.h"
+Storm Shell Project (Dependencies)
+"objects/Rasterfunctions.o" "objects/Rasterfunctions.debug"
+""
+1 1
+File
+1 "SelectionandFeedback.c"
+"SelectionandFeedback.c"
+"/gl/gl.h"
+"/gl/gldefines.h"
+"/gl/gldeclarations.auto.h"
+Storm Shell Project (Dependencies)
+"objects/SelectionandFeedback.o" "objects/SelectionandFeedback.debug"
+""
+1 1
+File
+1 "SGIS.c"
+"SGIS.c"
+"/gl/gl.h"
+"/gl/gldefines.h"
+"/gl/gldeclarations.auto.h"
+Storm Shell Project (Dependencies)
+"objects/SGIS.o" "objects/SGIS.debug"
+""
+1 1
+File
+1 "Stenciling.c"
+"Stenciling.c"
+"/gl/gl.h"
+"/gl/gldefines.h"
+"/gl/gldeclarations.auto.h"
+Storm Shell Project (Dependencies)
+"objects/Stenciling.o" "objects/Stenciling.debug"
+""
+1 1
+File
+1 "StormMESA.c"
+"StormMESA.c"
+"/gl/gl.h"
+"/gl/gldefines.h"
+"/gl/gldeclarations.auto.h"
+"Amigamesa.h"
+Storm Shell Project (Dependencies)
+"objects/StormMESA.o" "objects/StormMESA.debug"
+""
+1 1
+File
+1 "Texturemapping.c"
+"Texturemapping.c"
+"/gl/gl.h"
+"/gl/gldefines.h"
+"/gl/gldeclarations.auto.h"
+Storm Shell Project (Dependencies)
+"objects/Texturemapping.o" "objects/Texturemapping.debug"
+""
+1 1
+File
+1 "Transformation.c"
+"Transformation.c"
+"/gl/gl.h"
+"/gl/gldefines.h"
+"/gl/gldeclarations.auto.h"
+Storm Shell Project (Dependencies)
+"objects/Transformation.o" "objects/Transformation.debug"
+""
+1 1
+File
+1 "VertexArrays.c"
+"VertexArrays.c"
+"/gl/gl.h"
+"/gl/gldefines.h"
+"/gl/gldeclarations.auto.h"
+Storm Shell Project (Dependencies)
+"objects/VertexArrays.o" "objects/VertexArrays.debug"
+""
+1 1
+File
+1 "QuarkTex:gl/gl.c"
+"QuarkTex:gl/gl.c"
+Storm Shell Project (Dependencies)
+"objects/gl.o" "objects/gl.debug"
+""
+1 1
+Section
+2 1 95
+0 1 1 0
+2
+File
+2 "Amigamesa.h"
+"Amigamesa.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "QuarkTex:gl/gl.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "QuarkTex:gl/gldefines.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+2 "QuarkTex:gl/gldeclarations.auto.h"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+Section
+16 1 75
+0 1 1 0
+8
+File
+16 "agl_lib.fd"
+"agl_lib.fd"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+Section
+10 1 40
+0 0 0 0
+7
+File
+10 "LIBS:agl.library"
+"LIBS:agl.library"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+Section
+5 1 -50
+0 0 0 0
+7
+File
+5 "storm.lib"
+"storm.lib"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+File
+5 "amiga.lib"
+"amiga.lib"
+Storm Shell Project (Dependencies)
+"" ""
+""
+0 0
+Storm Shell Project (End)

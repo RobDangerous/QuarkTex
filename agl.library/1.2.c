@@ -1,0 +1,6 @@
+#include "../gl/gl.h"
+
+void glDrawRangeElements(GLenum mode __asm("d0"), GLuint start __asm("d1"), GLuint end __asm("d2"), GLsizei count __asm("d3"), GLenum type __asm("d4"), GLvoid *indices __asm("a0")) {LOG;}
+void glTexImage3D(GLenum target __asm("d0"), GLint level __asm("d1"), GLenum internalFormat __asm("d2"), GLsizei width __asm("d3"), GLsizei height __asm("d4"), GLsizei depth __asm("d5"), GLint border __asm("d6"), GLenum format __asm("d7"), GLenum type __asm("a0"), GLvoid *pixels __asm("a1")) {LOG;}
+void glTexSubImage3D(GLenum target __asm("d0"), GLint level __asm("d1"), GLint xoffset __asm("d2"), GLint yoffset __asm("d3"), GLint zoffset __asm("d4"), GLsizei width __asm("d5"), GLsizei height __asm("d6"), GLsizei depth __asm("d7"), GLenum format __asm("a0"), GLenum type __asm("a1"), GLvoid *pixels __asm("a2")) {LOG;}
+void glCopyTexSubImage3D(GLenum target __asm("d0"), GLint level __asm("d1"), GLint xoffset __asm("d2"), GLint yoffset __asm("d3"), GLint zoffset __asm("d4"), GLint x __asm("d5"), GLint y __asm("d6"), GLsizei width __asm("d7"), GLsizei height __asm("a0")) {LOG;}
