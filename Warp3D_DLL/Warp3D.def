@@ -1,0 +1,13 @@
+;LIBRARY WARP3D
+
+EXPORTS 
+createContext
+freeContext
+swapBuffers
+logString
+logInt
+logFloat
+loadTexture
+aglFogColor
+aglTexEnvfv
+deleteTexture
